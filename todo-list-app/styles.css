@@ -1,0 +1,55 @@
+body{
+    background: linear-gradient(90deg, rgba(188,78,156,1) 0%, rgba(248,7,89,1) 35%);
+}
+#square{
+    width: 400px;
+    background-color: white;
+    margin: auto;
+    border-radius: 15px;
+    margin-top: 50px;
+    text-align: center;
+}
+#input, #button{
+    width: 80%;
+    height: 4vh;
+    margin-bottom: 1vh;
+    padding-left: 10px;
+}
+#button{
+    margin-bottom: 2vh;
+}
+input, select{
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: none;
+}
+h1{
+    padding-top: 10px;
+}
+.todo__item{
+    background-color: white;
+    width: 400px;
+    height: 6vh;
+    display: block;
+    margin: auto;
+    border-radius: 12px;
+    margin-top: 15px;
+    position: relative;
+}
+#check1, #erase, span{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#check1{
+    
+}
+#erase{
+    right: 10px;
+}
+span{
+    left: 5%;
+}
+.todo__item > input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+}
