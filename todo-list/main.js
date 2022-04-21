@@ -3,7 +3,7 @@ const input = document.querySelector('#new-task-input');
 const list_el = document.querySelector('#tasks');
 const database = [];
 
-const createTask = function (userInput) {
+const createTask = function (userInput, index) {
     const task = userInput; 
     
     const task_el = document.createElement('div');
@@ -20,7 +20,7 @@ const createTask = function (userInput) {
     task_input_el.value = task;
     task_input_el.setAttribute("readonly", "readonly");
 
-    task_content_el.appendChild(task_input_el)
+    task_content_el.appendChild(task_input_el);
 
     const task_actions_el = document.createElement('div');
     task_actions_el.classList.add('actions');
@@ -32,6 +32,7 @@ const createTask = function (userInput) {
     const task_delete_el = document.createElement('button');
     task_delete_el.classList.add('delete');
     task_delete_el.innerHTML = "Delete";
+    task_delete_el.setAttribute("data-index", index);
 
     task_actions_el.appendChild(task_edit_el);
     task_actions_el.appendChild(task_delete_el);
@@ -52,19 +53,21 @@ const createTask = function (userInput) {
     });
     task_delete_el.addEventListener('click', () =>{
         list_el.removeChild(task_el);
+        const indexOfThisButton = task_delete_el.dataset.index; 
+        database.splice(indexOfThisButton, 1);
+        console.log(database);
+        localStorage.setItem("tasks", JSON.stringify(database));
     });
 }
 window.onload = function () {
     // localStorage.clear();
     let taskStorage = localStorage.getItem("tasks");
     let parsed = JSON.parse(taskStorage);
-    console.log(parsed);
-    parsed.forEach(function (item){
+    parsed.forEach(function (item, index){
         database.push(item);
-        createTask(item);
-        console.log(item);
+        createTask(item, index);
     });
-    console.log(database);  
+    console.log(database);
 };
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -73,7 +76,8 @@ form.addEventListener('submit', (event) => {
         return;
     } 
     database.push(input.value);
-    console.log(database);
-    localStorage.setItem("tasks", JSON.stringify(database));
+    // localStorage.setItem("tasks", JSON.stringify(database));
     createTask(input.value);
+    localStorage.setItem("tasks", JSON.stringify(database));
+    console.log(database);
 });
