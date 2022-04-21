@@ -61,7 +61,6 @@ const createTask = function (userInput, index) {
         list_el.removeChild(task_el);
         const indexOfThisButton = task_delete_el.dataset.index; 
         database.splice(indexOfThisButton, 1);
-        console.log(database);
         localStorage.setItem("tasks", JSON.stringify(database));
     });
 }
@@ -80,8 +79,6 @@ form.addEventListener('submit', (event) => {
         return;
     } 
     database.push(input.value);
-    // localStorage.setItem("tasks", JSON.stringify(database));
     createTask(input.value);
     localStorage.setItem("tasks", JSON.stringify(database));
-    console.log(database);
 });
