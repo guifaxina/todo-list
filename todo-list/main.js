@@ -4,8 +4,8 @@ const list_el = document.querySelector('#tasks');
 const database = [];
 
 const createTask = function (userInput) {
-    const task = userInput;
-        
+    const task = userInput; 
+    
     const task_el = document.createElement('div');
     task_el.classList.add("task");
 
@@ -40,7 +40,7 @@ const createTask = function (userInput) {
     
     list_el.appendChild(task_el);
     input.value = '';
-    task_edit_el.addEventListener('click', () => {
+    task_edit_el.addEventListener("click", () => {
         if (task_edit_el.innerText.toLowerCase() == "edit"){
             task_input_el.removeAttribute('readonly');
             task_input_el.focus();
@@ -55,14 +55,17 @@ const createTask = function (userInput) {
     });
 }
 window.onload = function () {
+    // localStorage.clear();
     let taskStorage = localStorage.getItem("tasks");
     let parsed = JSON.parse(taskStorage);
     console.log(parsed);
     parsed.forEach(function (item){
+        database.push(item);
         createTask(item);
+        console.log(item);
     });
+    console.log(database);  
 };
-
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     if (input.value == '') {
