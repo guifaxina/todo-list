@@ -4,7 +4,7 @@ const list_el = document.querySelector('#tasks');
 const database = [];
 
 const createTask = function (userInput, index) {
-    const task = userInput; 
+    const task = userInput;  
     
     const task_el = document.createElement('div');
     task_el.classList.add("task");
@@ -18,6 +18,7 @@ const createTask = function (userInput, index) {
     task_input_el.classList.add("text");
     task_input_el.type = "text";
     task_input_el.value = task;
+    
     task_input_el.setAttribute("readonly", "readonly");
 
     task_content_el.appendChild(task_input_el);
@@ -28,6 +29,7 @@ const createTask = function (userInput, index) {
     const task_edit_el = document.createElement('button');
     task_edit_el.classList.add('edit');
     task_edit_el.innerHTML = "Edit";
+    task_edit_el.setAttribute("data-index", index);
 
     const task_delete_el = document.createElement('button');
     task_delete_el.classList.add('delete');
@@ -49,7 +51,11 @@ const createTask = function (userInput, index) {
         } else {
             task_input_el.setAttribute("readonly","readonly");
             task_edit_el.innerText = "edit";
+            const indexEditButton = parseInt(task_edit_el.dataset.index);
+            database[indexEditButton] = task_input_el.value;
+            localStorage.setItem("tasks", JSON.stringify(database));
         }
+
     });
     task_delete_el.addEventListener('click', () =>{
         list_el.removeChild(task_el);
@@ -59,15 +65,13 @@ const createTask = function (userInput, index) {
         localStorage.setItem("tasks", JSON.stringify(database));
     });
 }
-window.onload = function () {
-    // localStorage.clear();
+onload = function () {
     let taskStorage = localStorage.getItem("tasks");
     let parsed = JSON.parse(taskStorage);
     parsed.forEach(function (item, index){
         database.push(item);
         createTask(item, index);
     });
-    console.log(database);
 };
 form.addEventListener('submit', (event) => {
     event.preventDefault();
